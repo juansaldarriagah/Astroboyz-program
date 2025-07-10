@@ -33,6 +33,7 @@ public class IdeaService {
 	    public List<Idea> listarIdeas() {
 	        return new ArrayList<>(ideas.values());
 	    }
+	// Solo admin puede borrar ideas :v
 	  public void eliminarIdea(String ideaId) {
 	        ideas.remove(ideaId);
 	        guardarIdeas();
