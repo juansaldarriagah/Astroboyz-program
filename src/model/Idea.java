@@ -42,12 +42,10 @@ public int getVotesAgaints(){
 }
 
 // vote system
-public void addVoteInFavor(){
-    votesInFavor++;
-}
-public void addVoteAgainst(){
-    votesAgains++;
-}
+ public void votar(boolean inFavor) {
+        if (inFavor) votesInFavor++;
+        else votesAgaints++;
+    }
     //guardar Ideas 
   public String toPropertiesFormat() {
         return title + "|" + description + "|" + autorUsername + "|" + votesInFavor + "|" + votesAgaints;
