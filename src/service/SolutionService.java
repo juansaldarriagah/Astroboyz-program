@@ -37,4 +37,11 @@ public class SolutionService {
 	        }
 	        return result;
 	    }
+	// Solo admin puede borrar
+	//para cuando se borra una idea, borrar todas sus soluciones
+	   public void eliminarSolucionesDeIdea(String ideaId) {
+	        soluciones.entrySet().removeIf(entry -> entry.getValue().getIdeaId().equals(ideaId));
+	        guardarSoluciones();
+	    }
+
 	}
