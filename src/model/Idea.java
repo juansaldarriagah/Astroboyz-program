@@ -9,7 +9,7 @@ public class Idea implements serializable {
     private String autorUsername;
     private int votesInFavor;
     private int votesAgaints;
-    private List<Solution> solutions;
+   
 
     // Constructors
 public idea (String id , String title , String description , String autorUsername){
@@ -19,37 +19,28 @@ public idea (String id , String title , String description , String autorUsernam
     this.autorUsername=autorUsername;
     this.votesInFavor=0;
     this.votesAgaintsj=0;
-    this.solutions= new arraylist<>();
 }
 
 // getters
 public String getId(){
     return id;
 }
-
 public String getTitle(){
     return title;
 }
-
 public String getDescription(){
     return description;
 }
-
 public String getAuthorUsername(){
     return autorUsername;
 }
-
 public int getVotesInFavor(){
     return votesInFavor;
 }
-
 public int getVotesAgaints(){
     return votesAgaints;
 }
 
-public list<Solution> getSolutions(){
-    return solutions;
-}
 // vote system
 public void addVoteInFavor(){
     votesInFavor++;
@@ -57,17 +48,19 @@ public void addVoteInFavor(){
 public void addVoteAgainst(){
     votesAgains++;
 }
-//add solutions
-public void addSolution(Solution solution){
-    solutions.add(solutions);
-}
-@Override
-public String toString(){
-return "idea: "+ title + "\n" +
-        "Autor: "+ autorUsername + "\n" +
-        "Descripcion: "+ description + "\n" +
-        "Votos a favor "+ votesInFavor + " en contra: " + votesAgainst + "\n" +
-         "Soluciones propuestas: " + solutions.size();
-    
-}
+    //guardar Ideas 
+  public String toPropertiesFormat() {
+        return title + "|" + description + "|" + autorUsername + "|" + votesInFavor + "|" + votesAgaints;
+    }
+
+    public static Idea fromProperties(String id, String value) {
+        String[] parts = value.split("\\|");
+        if (parts.length < 5) return null;
+        Idea idea = new Idea(id, parts[0], parts[1], parts[2]);
+        idea.votesInFavor = Integer.parseInt(parts[3]);
+        idea.votesAgaints = Integer.parseInt(parts[4]);
+        return idea;
+    }
+
+
 }
