@@ -1,9 +1,9 @@
 package auth;
 
 import model.idea 
-import auth.user
 import service.IdeaService
-import Solution.Service
+import service.SolutionService
+import service.UserService
 
 public class AdminUser extends User {
 private transient UserService userSevice;
