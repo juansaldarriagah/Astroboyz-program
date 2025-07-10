@@ -1,10 +1,36 @@
 package service;
 import java.util.*;
 import model.Idea;
+import utils.PropertiesManager;
 
 public class IdeaService {
-    public void proponerIdea(String titulo, String desc, User autor);
-    public void cargarIdeas(); // ideas.properties
-    public void guardarIdeas();
-    public List<Idea> listarIdeas();
-}
+	 private final Map<String, Idea> ideas = new HashMap<>();
+	    private final String FILE_NAME = "ideas.properties";
+	    public IdeaService() {
+	        cargarIdeas();
+	    }
+	    
+	    public void proponerIdea(String title, String desc, String autor) {
+	        String id = UUID.randomUUID().toString();
+	        Idea idea = new Idea(id, title, desc, autor);
+	        ideas.put(id, idea);
+	        guardarIdeas();
+	    }
+	    public void cargarIdeas() {
+	        Properties props = PropertiesManager.cargarProperties(FILE_NAME);
+	        for (String key : props.stringPropertyNames()) {
+	            Idea idea = Idea.fromProperties(key, props.getProperty(key));
+	            if (idea != null) ideas.put(key, idea);
+	        }
+	    } // ideas.properties
+	    public void guardarIdeas() {
+	        Properties props = new Properties();
+	        for (Idea idea : ideas.values()) {
+	            props.setProperty(idea.getId(), idea.toPropertiesFormat());
+	        }
+	        PropertiesManager.guardarProperties(FILE_NAME, props);
+	    }
+	    public List<Idea> listarIdeas() {
+	        return new ArrayList<>(ideas.values());
+	    }
+	}
