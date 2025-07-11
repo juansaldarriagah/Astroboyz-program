@@ -3,6 +3,7 @@ package service;
 import auth.User;
 import auth.AdminUser;
 import auth.NormalUser;
+import sync.FileLockManager;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class UserService {
   private List<User> usuarios;
+  private LockManager lockmanager = new LockManager();
 
 public UserService(){
   usuarios = new ArrayList<>();
@@ -53,11 +55,21 @@ public List<User> getUsuarios(){
   return usuarios;
 }
 // save the users inside a file
-public void guardarUsuarios (String rutaArchivo) throws IOException {
-  try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(rutaArchivo))) {
-    out.writeObject(usuarios);
-  } 
-}
+public void guardarUsuarios(String archivo) {
+        lockManager.esperarDesbloqueo(archivo); 
+
+        if (lockManager.bloquearArchivo(archivo)) { 
+            try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(archivo))) {
+                out.writeObject(usuarios);
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                lockManager.desbloquearArchivo(archivo);
+            }
+        } else {
+            System.err.println("No se pudo obtener el bloqueo para guardar usuarios.");
+        }
+    }
 // load the users from a file
 public void cargarUsuarios (String rutaArchivo, IdeaService ideaService , SolutionService solutionService) throws IOException, ClassNotFoundException {
   file archivo = new File(rutaArchivo);
