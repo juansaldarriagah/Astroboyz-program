@@ -1,8 +1,8 @@
 package model;
 import java.util.*;
-import java.io.serializable
+import java.io.Serializable;
 
-public class Idea implements serializable {
+public class Idea implements Serializable {
     private String id;
     private String title;
     private String description;
@@ -12,7 +12,7 @@ public class Idea implements serializable {
    
 
     // Constructors
-public idea (String id , String title , String description , String autorUsername){
+public Idea (String id , String title , String description , String autorUsername){
     this.id= id;
     this.title=title;
     this.description=description;
