@@ -1,14 +1,14 @@
 package auth;
 
-import model.idea 
-import service.IdeaService
-import service.SolutionService
-import service.UserService
+import model.idea;
+import service.IdeaService;
+import service.SolutionService;
+import service.UserService;
 
 public class AdminUser extends User {
-private transient UserService userSevice;
+private transient UserService userService;
 private transient IdeaService ideaService;
-private transient SolutionService solutionService
+private transient SolutionService solutionService;
 
 public AdminUser (String username , String password){
 	super (username , password);
@@ -22,9 +22,9 @@ public boolean eliminarUsuario(String username){
 	User user = userService.buscarPorUsername(username);
 	if ( user!= null && !(user instanceof AdminUser)){
 	userService.getUsuarios().remove(user);
-		return true
+		return true;
 }
-	return false
+	return false;
 }
 
 public boolean eliminarIdea (String idIdea){
@@ -32,7 +32,7 @@ public boolean eliminarIdea (String idIdea){
 	if (eliminada){
 		solutionService.eliminarSolucionesDeIdea(idIdea);
 	}
-	return eliminada
+	return eliminada;
 }
 }
 	
