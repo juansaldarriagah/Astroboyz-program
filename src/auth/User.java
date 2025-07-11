@@ -10,7 +10,7 @@ public class User implements Serializable {
 public User (String username, String password){
     this.username=username;
     this.password=password;
-    this.points=0
+    this.points=0;
 }
 public String getUsername(){
     return username;
@@ -34,10 +34,10 @@ public void addpoints (int points){
     this.points+=points;
 }
 public void substractpoints (int points){
-    this.points=Math.max(0,this.puntos-puntos);
+    this.points=Math.max(0,this.points-points);
 }
     @Override 
     public String toString(){
-        return "Usuario: "+ Username + "| Puntos: "+points);
+        return "Usuario: "+ username + "| Puntos: "+ points;
     }
 }
