@@ -4,7 +4,7 @@ import java.io.*;
 import java.nio.channels.FileChannel;
 import java.nio.channels.FileLock;
 
-public class LockManager {
+public class FileLockManager {
 
     public static boolean withFileLock(String filePath, FileOperation operation) {
         try (RandomAccessFile raf = new RandomAccessFile(filePath, "rw");
