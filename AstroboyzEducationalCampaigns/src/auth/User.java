@@ -1,0 +1,43 @@
+package auth;
+import java.io.Serializable;
+
+public class User implements Serializable {
+    private static final long serialVersionUID = 1L;
+    protected String username;
+    protected String password;
+    protected int points;
+
+public User (String username, String password){
+    this.username=username;
+    this.password=password;
+    this.points=0;
+}
+public String getUsername(){
+    return username;
+}
+public void setUsername(String username) {
+    this.username = username;
+}
+public String getpassword(){
+    return password;
+}
+public void setPassword(String password){
+    this.password=password;
+}
+public int getPoints(){
+    return points;
+} 
+public void setPoints(int points){
+    this.points=points;
+}
+public void addpoints (int points){
+    this.points+=points;
+}
+public void substractpoints (int points){
+    this.points=Math.max(0,this.points-points);
+}
+    @Override 
+    public String toString(){
+        return "Usuario: "+ username + "| Puntos: "+ points;
+    }
+}
