@@ -49,9 +49,7 @@ public class LockManager {
                 intentos++;
             } catch (InterruptedException e) {
                 System.err.println("Hilo interrumpido mientras esperaba desbloqueo para: " + archivoBase);
-                // Restaurar el estado de interrupción del hilo
                 Thread.currentThread().interrupt();
-                // Salir del bucle si el hilo fue interrumpido.
                 break;
             }
         }
