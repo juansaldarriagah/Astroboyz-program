@@ -2,6 +2,7 @@ package service;
 import java.util.*;
 import model.Solution;
 import utils.PropertiesManager;
+import sync.LockManager;
 
 public class SolutionService {
 	 private final Map<String, Solution> soluciones = new HashMap<>();
@@ -24,12 +25,14 @@ public class SolutionService {
 	        }
 	    }
 	    public void guardarSoluciones() {
-	        Properties props = new Properties();
-	        for (Solution s : soluciones.values()) {
-	            props.setProperty(s.getId(), s.toPropertiesFormat());
-	        }
-	        PropertiesManager.guardarProperties(FILE_NAME, props);
-	    }
+    LockManager.ejecutarConBloqueo(FILE_NAME, () -> {
+        Properties props = new Properties();
+        for (Solution s : soluciones.values()) {
+            props.setProperty(s.getId(), s.toPropertiesFormat());
+        }
+        PropertiesManager.guardarProperties(FILE_NAME, props);
+    });
+}
 	    public List<Solution> listarSolucionesDeIdea(String ideaId) {
 	        List<Solution> result = new ArrayList<>();
 	        for (Solution s : soluciones.values()) {
