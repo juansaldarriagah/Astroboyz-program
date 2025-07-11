@@ -1,4 +1,4 @@
-package service 
+package service;
 
 import auth.User;
 import auth.AdminUser;
@@ -12,7 +12,7 @@ public class UserService {
   private List<User> usuarios;
 
 public UserService(){
-  usuario = new ArrayList<>();
+  usuarios = new ArrayList<>();
   crearAdminSiNoExiste();
 }
 private void crearAdminSiNoExiste(){
@@ -41,7 +41,7 @@ public User buscarPorUsername (String username){
 // credential verification for login
 public User autenticar (String username , String password) {
   for (User user : usuarios){
-    if (user.getUsername().equals(username) && user.getPassword().equals(password){
+    if (user.getUsername().equals(username) && user.getpassword().equals(password)){
         return user ;
 }
   }
@@ -59,11 +59,11 @@ public void guardarUsuarios (String rutaArchivo) throws IOException {
   } 
 }
 // load the users from a file
-public void cargarUsuarios (String rutaArchivo, IdeaService ideaService , SolutionService solutionService) throws IOException ClassNotFoundException {
-  file archivo = new File(ruta archivo);
-  if (archivo.exsist()) {
-    try (ObjectInputStream in = new ObjectOutputStream (new FileOutputStream(rutaArchivo))){
-    usuarios = (List<users>) in.readObject(); 
+public void cargarUsuarios (String rutaArchivo, IdeaService ideaService , SolutionService solutionService) throws IOException, ClassNotFoundException {
+  file archivo = new File(rutaArchivo);
+  if (archivo.exist()) {
+    try (ObjectInputStream in = new ObjectInputStream (new FileInputStream(rutaArchivo))){
+    usuarios = (List<User>) in.readObject(); 
       }
   } else {
     usuarios= new ArrayList<>();
@@ -71,7 +71,7 @@ public void cargarUsuarios (String rutaArchivo, IdeaService ideaService , Soluti
   // admin verification
 
   User admin = buscarPorUsername("Admin");
-  if (admin == null || !(admin instanceof Adminuser)){
+  if (admin == null || !(admin instanceof AdminUser)){
     AdminUser nuevoAdmin = new AdminUser("admin","admin123");
     nuevoAdmin.setServicios(this, ideaService , solutionService);
     usuarios.add(nuevoAdmin);
