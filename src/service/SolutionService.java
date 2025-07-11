@@ -2,7 +2,7 @@ package service;
 import java.util.*;
 import model.Solution;
 import utils.PropertiesManager;
-import sync.LockManager;
+import sync.FileLockManager;
 
 public class SolutionService {
 	 private final Map<String, Solution> soluciones = new HashMap<>();
