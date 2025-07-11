@@ -13,7 +13,18 @@ public class UserService {
 
 public UserService(){
   usuario = new ArrayList<>();
+  crearAdminSiNoExiste();
 }
+private void crearAdminSiNoExiste(){
+  boolean adminExiste = usuarios.stream()
+    .anyMatch(u -> u instanceof AdminUser && u.getUsername().equals("Admin"));
+  if (!adminExiste){
+    AdminUser admin = new AdminUser ("admin", "admin123");
+    admin.setServicios(this,null,null);
+    usuarios.add(admin)
+  }
+}
+
 //register new users
 public void registerUser(User user){
   usuarios.add(user);
@@ -48,16 +59,28 @@ public void guardarUsuarios (String rutaArchivo) throws IOException {
   } 
 }
 // load the users from a file
-public void cargarUsuarios (String rutaArchivo) throws IOException ClassNotFoundException {
+public void cargarUsuarios (String rutaArchivo, IdeaService ideaService , SolutionService solutionService) throws IOException ClassNotFoundException {
   file archivo = new File(ruta archivo);
-  if (!archivo.exsist()) {
-    usuarios = new Arraylist<>();
-    return;
-  }
-  try (ObjectInputStream in = new ObjectOutputStream (new FileOutputStream(rutaArchivo))){
+  if (archivo.exsist()) {
+    try (ObjectInputStream in = new ObjectOutputStream (new FileOutputStream(rutaArchivo))){
     usuarios = (List<users>) in.readObject(); 
+      }
+  } else {
+    usuarios= new ArrayList<>();
+  }
+  // admin verification
+
+  User admin = buscarPorUsername("Admin");
+  if (admin == null || !(admin instanceof Adminuser)){
+    AdminUser nuevoAdmin = new AdminUser("admin","admin123");
+    nuevoAdmin.setServicios(this, ideaService , solutionService);
+    usuarios.add(nuevoAdmin);
+  } else {
+    ((AdminUser) admin).setServicios(this, ideaService , solutionService);
   }
 }
 }
+
+
 
   
